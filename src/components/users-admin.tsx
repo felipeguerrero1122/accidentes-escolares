@@ -11,6 +11,8 @@ type UserItem = {
   active: boolean;
 };
 
+type ErrorResponse = { error?: string };
+
 function UserRow({
   user,
   onUpdated,
@@ -46,7 +48,7 @@ function UserRow({
     });
 
     if (!response.ok) {
-      const data = await response.json().catch(() => null);
+      const data = (await response.json().catch(() => null)) as ErrorResponse | null;
       setError(data?.error ?? "No se pudo actualizar el usuario.");
       setPending(false);
       return;
@@ -65,7 +67,7 @@ function UserRow({
     const response = await fetch(`/api/users/${user.id}`, { method: "DELETE" });
 
     if (!response.ok) {
-      const data = await response.json().catch(() => null);
+      const data = (await response.json().catch(() => null)) as ErrorResponse | null;
       setError(data?.error ?? "No se pudo eliminar el usuario.");
       setPending(false);
       return;
@@ -166,7 +168,7 @@ export function UsersAdmin({ users }: { users: UserItem[] }) {
     });
 
     if (!response.ok) {
-      const data = await response.json().catch(() => null);
+      const data = (await response.json().catch(() => null)) as ErrorResponse | null;
       setError(data?.error ?? "No se pudo crear el usuario.");
       setPending(false);
       return;

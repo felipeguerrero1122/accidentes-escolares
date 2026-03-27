@@ -28,6 +28,10 @@ type Props = {
   };
 };
 
+type ErrorResponse = {
+  error?: string;
+};
+
 export function AccidentEditForm({ accidentId, places, injuries, initialValues }: Props) {
   const router = useRouter();
   const [pending, setPending] = useState(false);
@@ -61,7 +65,7 @@ export function AccidentEditForm({ accidentId, places, injuries, initialValues }
     });
 
     if (!response.ok) {
-      const data = await response.json().catch(() => null);
+      const data = (await response.json().catch(() => null)) as ErrorResponse | null;
       setError(data?.error ?? "No se pudo actualizar el accidente.");
       setPending(false);
       return;

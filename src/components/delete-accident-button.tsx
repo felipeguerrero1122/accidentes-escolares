@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+type ErrorResponse = { error?: string };
+
 export function DeleteAccidentButton({ accidentId }: { accidentId: string }) {
   const router = useRouter();
   const [pending, setPending] = useState(false);
@@ -20,7 +22,7 @@ export function DeleteAccidentButton({ accidentId }: { accidentId: string }) {
     });
 
     if (!response.ok) {
-      const data = await response.json().catch(() => null);
+      const data = (await response.json().catch(() => null)) as ErrorResponse | null;
       setError(data?.error ?? "No fue posible eliminar el accidente.");
       setPending(false);
       return;

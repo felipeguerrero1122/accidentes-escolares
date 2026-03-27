@@ -17,6 +17,8 @@ type StudentFormValues = {
   active?: boolean;
 };
 
+type ErrorResponse = { error?: string };
+
 export function StudentForm({ initialValues }: { initialValues?: StudentFormValues }) {
   const router = useRouter();
   const [error, setError] = useState("");
@@ -48,7 +50,7 @@ export function StudentForm({ initialValues }: { initialValues?: StudentFormValu
     });
 
     if (!response.ok) {
-      const data = await response.json().catch(() => null);
+      const data = (await response.json().catch(() => null)) as ErrorResponse | null;
       setError(data?.error ?? "No se pudo guardar el alumno.");
       setPending(false);
       return;

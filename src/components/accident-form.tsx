@@ -17,6 +17,8 @@ type StudentPreview = {
 };
 
 type CatalogOption = { id: string; name: string };
+type ErrorResponse = { error?: string };
+type AccidentResponse = { id: string };
 
 function ageAtDate(birthDate?: string | null, accidentDate?: string) {
   if (!birthDate || !accidentDate) return "";
@@ -133,13 +135,13 @@ export function AccidentForm({
     });
 
     if (!response.ok) {
-      const data = await response.json().catch(() => null);
+      const data = (await response.json().catch(() => null)) as ErrorResponse | null;
       setError(data?.error ?? "No fue posible guardar el accidente.");
       setPending(false);
       return;
     }
 
-    const accident = await response.json();
+    const accident = (await response.json()) as AccidentResponse;
     router.push(`/accidents/${accident.id}`);
     router.refresh();
   }

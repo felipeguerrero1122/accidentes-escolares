@@ -3,6 +3,8 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
+type ErrorResponse = { error?: string };
+
 export function LoginForm() {
   const router = useRouter();
   const [error, setError] = useState("");
@@ -24,7 +26,7 @@ export function LoginForm() {
     });
 
     if (!response.ok) {
-      const data = await response.json().catch(() => null);
+      const data = (await response.json().catch(() => null)) as ErrorResponse | null;
       setError(data?.error ?? "No fue posible iniciar sesión.");
       setPending(false);
       return;

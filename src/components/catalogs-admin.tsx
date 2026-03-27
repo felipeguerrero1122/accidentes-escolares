@@ -4,6 +4,8 @@ import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
 type Item = { id: string; name: string };
+type ErrorResponse = { error?: string };
+type ImportResponse = { imported?: number; issues?: unknown[] };
 
 function CatalogForm({ endpoint, title }: { endpoint: string; title: string }) {
   const router = useRouter();
@@ -24,7 +26,7 @@ function CatalogForm({ endpoint, title }: { endpoint: string; title: string }) {
     });
 
     if (!response.ok) {
-      const data = await response.json().catch(() => null);
+      const data = (await response.json().catch(() => null)) as ErrorResponse | null;
       setError(data?.error ?? "No se pudo agregar.");
       setPending(false);
       return;
@@ -57,7 +59,7 @@ function ImportForm({ endpoint, title }: { endpoint: string; title: string }) {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
     const response = await fetch(endpoint, { method: "POST", body: form });
-    const data = await response.json();
+    const data = (await response.json()) as ImportResponse;
     setMessage(`Importados: ${data.imported ?? 0}. Observaciones: ${data.issues?.length ?? 0}.`);
     router.refresh();
   }
@@ -100,7 +102,7 @@ function CatalogList({
     });
 
     if (!response.ok) {
-      const data = await response.json().catch(() => null);
+      const data = (await response.json().catch(() => null)) as ErrorResponse | null;
       setRowError(data?.error ?? "No se pudo actualizar.");
       setRowPendingId("");
       return;
@@ -118,7 +120,7 @@ function CatalogList({
     const response = await fetch(`${endpoint}/${item.id}`, { method: "DELETE" });
 
     if (!response.ok) {
-      const data = await response.json().catch(() => null);
+      const data = (await response.json().catch(() => null)) as ErrorResponse | null;
       setRowError(data?.error ?? "No se pudo eliminar.");
       setRowPendingId("");
       return;
