@@ -1,0 +1,145 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  OPERATOR
+}
+
+model User {
+  id           String     @id @default(cuid())
+  name         String
+  email        String     @unique
+  passwordHash String
+  role         UserRole   @default(OPERATOR)
+  active       Boolean    @default(true)
+  createdAt    DateTime   @default(now())
+  accidents    Accident[]
+}
+
+model Student {
+  id                    String     @id @default(cuid())
+  studentCode           String
+  fullName              String
+  paternalSurname       String?
+  maternalSurname       String?
+  givenNames            String?
+  rut                   String     @unique
+  gradeLevel            String
+  schoolSchedule        String?
+  sex                   String?
+  birthDate             DateTime?
+  guardianName          String?
+  guardianPhone         String?
+  phoneAreaCode         String?
+  phoneNumber           String?
+  residenceStreet       String?
+  residenceNumber       String?
+  residenceNeighborhood String?
+  residenceCommune      String?
+  residenceCity         String?
+  healthNotes           String?
+  observations          String?
+  active                Boolean    @default(true)
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+  accidents             Accident[]
+
+  @@index([gradeLevel])
+  @@index([fullName])
+}
+
+model Accident {
+  id                         String    @id @default(cuid())
+  recordNumber               Int       @unique
+  studentId                  String
+  accidentDate               DateTime
+  accidentTime               String
+  place                      String
+  description                String
+  injuryType                 String?
+  firstAid                   String?
+  referred                   Boolean   @default(false)
+  healthCenter               String?
+  guardianInformed           Boolean   @default(false)
+  guardianNoticeTime         String?
+  responsibleName            String?
+  observations               String?
+  accidentContext            String?
+  witnessAName               String?
+  witnessAId                 String?
+  witnessBName               String?
+  witnessBId                 String?
+  accidentCircumstances      String?
+  medicalServiceCode         String?
+  medicalEstablishmentCode   String?
+  medicalEstablishmentName   String?
+  medicalDiagnosis           String?
+  affectedBodyPart           String?
+  hospitalized               Boolean?
+  hospitalizationDays        Int?
+  hasIncapacity              Boolean?
+  incapacityDays             Int?
+  incapacityTypeCode         String?
+  caseClosureCauseCode       String?
+  caseClosureDate            DateTime?
+  studentRut                 String
+  studentCode                String
+  studentFullName            String
+  studentPaternalSurname     String?
+  studentMaternalSurname     String?
+  studentGivenNames          String?
+  studentGradeLevel          String
+  studentSchoolSchedule      String?
+  studentSex                 String?
+  studentBirthDateSnapshot   DateTime?
+  studentAgeAtAccident       Int?
+  guardianNameSnapshot       String?
+  guardianPhoneSnapshot      String?
+  phoneAreaCodeSnapshot      String?
+  phoneNumberSnapshot        String?
+  residenceStreetSnapshot    String?
+  residenceNumberSnapshot    String?
+  residenceNeighborhoodSnapshot String?
+  residenceCommuneSnapshot   String?
+  residenceCitySnapshot      String?
+  createdByUserId            String?
+  createdAt                  DateTime  @default(now())
+
+  student       Student @relation(fields: [studentId], references: [id], onDelete: Restrict)
+  createdByUser User?   @relation(fields: [createdByUserId], references: [id], onDelete: SetNull)
+
+  @@index([studentId])
+  @@index([accidentDate])
+  @@index([studentGradeLevel])
+}
+
+model CatalogPlace {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model CatalogInjury {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model SchoolSettings {
+  id                String   @id
+  establishmentName String?
+  city              String?
+  commune           String?
+  dependencyType    String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}

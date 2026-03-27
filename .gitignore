@@ -1,0 +1,10 @@
+node_modules/
+.next/
+.env
+public-link.txt
+cloudflared.log
+cloudflared.err.log
+next-start.out.log
+next-start.err.log
+guide-images/
+pg-local/

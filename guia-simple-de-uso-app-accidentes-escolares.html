@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guia Simple de Uso - App de Accidentes Escolares</title>
+  <style>
+    :root {
+      --ink: #1f3552;
+      --rose: #a1285f;
+      --soft: #fff7fa;
+      --line: #efd5e3;
+      --muted: #5f6f85;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--ink);
+      background: #f8eef3;
+      line-height: 1.55;
+    }
+
+    .page {
+      max-width: 900px;
+      margin: 24px auto;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 40px 48px;
+      box-shadow: 0 10px 30px rgba(80, 30, 60, 0.08);
+    }
+
+    h1, h2, h3 {
+      margin: 0 0 12px;
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: 32px;
+      color: var(--rose);
+    }
+
+    h2 {
+      margin-top: 28px;
+      font-size: 24px;
+      color: var(--ink);
+      border-bottom: 2px solid var(--line);
+      padding-bottom: 8px;
+    }
+
+    h3 {
+      margin-top: 18px;
+      font-size: 18px;
+      color: var(--rose);
+    }
+
+    p { margin: 10px 0; }
+
+    ul, ol {
+      margin: 10px 0 14px 24px;
+      padding: 0;
+    }
+
+    li { margin: 6px 0; }
+
+    .lead {
+      font-size: 18px;
+      color: var(--muted);
+      margin-top: 12px;
+    }
+
+    .box {
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px 18px;
+      margin: 16px 0;
+    }
+
+    .roles {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 16px 0;
+    }
+
+    .role-card {
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 18px;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      .page {
+        margin: 0;
+        max-width: none;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 18mm 16mm;
+      }
+
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <h1>Guia Simple de Uso</h1>
+    <p class="lead">App de Accidentes Escolares</p>
+
+    <div class="box">
+      <p>Esta app sirve para registrar y ordenar accidentes escolares de forma simple, rapida y clara.</p>
+      <p>En vez de usar planillas Excel o escribir todo a mano, aqui puedes guardar accidentes, buscar alumnos, revisar historiales, ver estadisticas y generar reportes en PDF.</p>
+    </div>
+
+    <h2>1. Para que sirve</h2>
+    <ul>
+      <li>Tener un registro digital de accidentes.</li>
+      <li>Encontrar rapidamente la informacion de un alumno.</li>
+      <li>Ver cuantos accidentes han ocurrido.</li>
+      <li>Revisar en que cursos o lugares ocurren mas accidentes.</li>
+      <li>Mantener un historial ordenado.</li>
+      <li>Imprimir reportes cuando sea necesario.</li>
+    </ul>
+
+    <h2>2. Como entrar a la app</h2>
+    <ol>
+      <li>Abre el enlace de la app en tu navegador.</li>
+      <li>Escribe tu correo y tu contraseña.</li>
+      <li>Presiona <strong>Iniciar sesion</strong>.</li>
+      <li>Cuando termines, presiona <strong>Cerrar sesion</strong>.</li>
+    </ol>
+
+    <h2>3. Tipos de usuario</h2>
+    <div class="roles">
+      <section class="role-card">
+        <h3>Administrador</h3>
+        <ul>
+          <li>Puede crear.</li>
+          <li>Puede editar.</li>
+          <li>Puede eliminar.</li>
+          <li>Puede administrar usuarios.</li>
+          <li>Puede administrar lugares y tipos de lesion.</li>
+          <li>Puede importar informacion.</li>
+        </ul>
+      </section>
+
+      <section class="role-card">
+        <h3>Operador</h3>
+        <ul>
+          <li>Solo puede revisar informacion.</li>
+          <li>Puede consultar alumnos.</li>
+          <li>Puede ver accidentes.</li>
+          <li>Puede mirar el dashboard.</li>
+          <li>No puede crear, editar ni borrar.</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2>4. Como moverse dentro de la app</h2>
+    <ul>
+      <li><strong>Dashboard:</strong> muestra el resumen general.</li>
+      <li><strong>Alumnos:</strong> permite buscar y revisar fichas de estudiantes.</li>
+      <li><strong>Accidentes:</strong> permite ver el historial y registrar accidentes.</li>
+      <li><strong>Ajustes:</strong> solo para administrador; sirve para usuarios, lugares, tipos de lesion e importaciones.</li>
+    </ul>
+
+    <h2>5. Como usar Alumnos</h2>
+    <h3>Para buscar un alumno</h3>
+    <ol>
+      <li>Entra a <strong>Alumnos</strong>.</li>
+      <li>Busca por nombre, RUT o revisa el listado.</li>
+      <li>Haz clic sobre el alumno que quieres revisar.</li>
+    </ol>
+
+    <h3>En la ficha del alumno puedes ver</h3>
+    <ul>
+      <li>ID del alumno</li>
+      <li>Nombre</li>
+      <li>RUT</li>
+      <li>Curso</li>
+      <li>Edad</li>
+      <li>Fecha de nacimiento</li>
+      <li>Apoderado</li>
+      <li>Telefono</li>
+      <li>Salud o alergias</li>
+      <li>Observaciones</li>
+    </ul>
+
+    <p>Si eres <strong>administrador</strong>, tambien puedes editar la ficha. Si eres <strong>operador</strong>, solo puedes mirar la informacion.</p>
+
+    <h2>6. Como usar Accidentes</h2>
+    <h3>Para ver el historial</h3>
+    <ol>
+      <li>Entra a <strong>Accidentes</strong>.</li>
+      <li>Revisa la lista de accidentes registrados.</li>
+      <li>Si quieres, filtra por RUT, curso, lesion o fecha.</li>
+    </ol>
+
+    <h3>Para registrar un accidente</h3>
+    <ol>
+      <li>Entra a <strong>Accidentes</strong>.</li>
+      <li>Presiona <strong>Registrar accidente</strong>.</li>
+      <li>Escribe el RUT del alumno.</li>
+      <li>La app completara automaticamente sus datos si ya esta en la base.</li>
+      <li>Completa la informacion del accidente.</li>
+      <li>Presiona <strong>Guardar accidente</strong>.</li>
+    </ol>
+
+    <h3>Que datos puedes registrar</h3>
+    <ul>
+      <li>Fecha</li>
+      <li>Hora</li>
+      <li>Lugar</li>
+      <li>Tipo de lesion</li>
+      <li>Descripcion</li>
+      <li>Primeros auxilios</li>
+      <li>Derivacion</li>
+      <li>Centro de salud</li>
+      <li>Aviso al apoderado</li>
+      <li>Responsable</li>
+      <li>Observaciones</li>
+    </ul>
+
+    <h3>Para abrir el detalle de un accidente</h3>
+    <ol>
+      <li>Entra al historial.</li>
+      <li>Haz clic sobre el numero de registro.</li>
+    </ol>
+
+    <p>Si eres <strong>administrador</strong>, tambien puedes editar el accidente, guardar cambios, eliminarlo y abrir el PDF. Si eres <strong>operador</strong>, solo puedes revisar la informacion.</p>
+
+    <h2>7. Como usar el Dashboard</h2>
+    <p>El dashboard sirve para mirar el resumen general de la informacion.</p>
+    <ul>
+      <li>Total de accidentes</li>
+      <li>Accidentes con derivacion</li>
+      <li>Accidentes sin aviso al apoderado</li>
+      <li>Accidentes sin descripcion</li>
+      <li>Ultimo registro</li>
+      <li>Curso con mas accidentes</li>
+      <li>Lesion mas frecuente</li>
+      <li>Dia con mas accidentes</li>
+    </ul>
+
+    <p>Tambien puedes revisar tablas de accidentes por curso, por tipo de lesion y por dia. Si lo necesitas, puedes abrir el PDF del resumen.</p>
+
+    <h2>8. Como usar Ajustes</h2>
+    <p>Esta seccion es solo para el administrador.</p>
+    <ul>
+      <li>Crear usuarios</li>
+      <li>Editar usuarios</li>
+      <li>Eliminar usuarios</li>
+      <li>Agregar, editar y borrar lugares</li>
+      <li>Agregar, editar y borrar tipos de lesion</li>
+      <li>Importar alumnos</li>
+      <li>Importar accidentes</li>
+    </ul>
+
+    <h2>9. Recomendaciones simples</h2>
+    <ul>
+      <li>Revisa siempre los datos antes de guardar.</li>
+      <li>Usa el RUT para encontrar alumnos mas rapido.</li>
+      <li>Si eres administrador, revisa bien antes de eliminar un registro.</li>
+      <li>Usa el historial para confirmar que un accidente si quedo guardado.</li>
+      <li>Si un cambio no aparece de inmediato, presiona <strong>Ctrl + F5</strong>.</li>
+    </ul>
+
+    <div class="box">
+      <p><strong>Resumen final:</strong> esta app fue hecha para que cualquier persona pueda registrar accidentes escolares, revisar alumnos, consultar historiales, ver estadisticas y trabajar de forma mas ordenada.</p>
+      <p class="small">Administrador: control total. Operador: consulta segura sin modificar informacion.</p>
+    </div>
+  </main>
+</body>
+</html>

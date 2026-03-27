@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guia paso a paso - App de Accidentes Escolares</title>
+  <style>
+    :root {
+      --ink: #1f3552;
+      --rose: #a1285f;
+      --soft: #fff7fa;
+      --line: #efd5e3;
+      --muted: #5f6f85;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--ink);
+      background: #f8eef3;
+      line-height: 1.55;
+    }
+
+    .page {
+      max-width: 980px;
+      margin: 24px auto;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 40px 44px;
+      box-shadow: 0 10px 30px rgba(80, 30, 60, 0.08);
+    }
+
+    h1, h2, h3 {
+      margin: 0 0 12px;
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: 34px;
+      color: var(--rose);
+    }
+
+    h2 {
+      margin-top: 32px;
+      font-size: 25px;
+      color: var(--ink);
+      border-bottom: 2px solid var(--line);
+      padding-bottom: 8px;
+    }
+
+    h3 {
+      margin-top: 18px;
+      font-size: 18px;
+      color: var(--rose);
+    }
+
+    p { margin: 10px 0; }
+
+    ul, ol {
+      margin: 10px 0 14px 24px;
+      padding: 0;
+    }
+
+    li { margin: 6px 0; }
+
+    .lead {
+      font-size: 18px;
+      color: var(--muted);
+      margin-top: 12px;
+    }
+
+    .hero, .tip, .section-card {
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px 20px;
+      margin: 16px 0;
+    }
+
+    .shot {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      margin: 14px 0 8px;
+      display: block;
+      box-shadow: 0 10px 24px rgba(40, 30, 60, 0.06);
+    }
+
+    .caption {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    .roles {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 16px 0;
+    }
+
+    .role-card {
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media print {
+      body { background: white; }
+      .page {
+        margin: 0;
+        max-width: none;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 14mm 12mm;
+      }
+      .section-card, .role-card, .hero, .tip {
+        break-inside: avoid;
+      }
+      img {
+        max-height: 220mm;
+        object-fit: contain;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <h1>Guia paso a paso</h1>
+    <p class="lead">App de Accidentes Escolares</p>
+
+    <section class="hero">
+      <p>Esta guia fue hecha para cualquier persona. Su objetivo es mostrar de forma simple como entrar a la app, como buscar alumnos, como registrar accidentes y como revisar la informacion sin complicaciones.</p>
+    </section>
+
+    <h2>1. Como entrar</h2>
+    <p>Primero abre el enlace de la app. Luego escribe tu correo y tu contraseña. Despues presiona <strong>Ingresar</strong>.</p>
+    <img class="shot" src="guide-images/01-login.png" alt="Pantalla de login" />
+    <p class="caption">Pantalla de ingreso.</p>
+    <ol>
+      <li>Escribe tu correo.</li>
+      <li>Escribe tu contraseña.</li>
+      <li>Presiona <strong>Ingresar</strong>.</li>
+      <li>Cuando termines, usa <strong>Cerrar sesion</strong>.</li>
+    </ol>
+
+    <h2>2. Que puedes hacer segun tu tipo de usuario</h2>
+    <div class="roles">
+      <section class="role-card">
+        <h3>Administrador</h3>
+        <ul>
+          <li>Puede crear registros.</li>
+          <li>Puede editar alumnos y accidentes.</li>
+          <li>Puede eliminar accidentes, usuarios y catalogos.</li>
+          <li>Puede entrar a Ajustes.</li>
+        </ul>
+      </section>
+      <section class="role-card">
+        <h3>Operador</h3>
+        <ul>
+          <li>Puede revisar la informacion.</li>
+          <li>Puede consultar alumnos y accidentes.</li>
+          <li>Puede mirar el dashboard.</li>
+          <li>No puede crear, editar ni borrar.</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2>3. Dashboard</h2>
+    <p>El dashboard sirve para ver el resumen general de la informacion. Muestra cantidades, cursos con mas accidentes, lesiones frecuentes y tablas por fecha, curso o lesion.</p>
+    <img class="shot" src="guide-images/02-dashboard.png" alt="Dashboard" />
+    <ol>
+      <li>Revisa los cuadros de arriba para ver el resumen rapido.</li>
+      <li>Mira las tablas para entender donde ocurren mas accidentes.</li>
+      <li>Si lo necesitas, abre el PDF del resumen.</li>
+    </ol>
+
+    <h2>4. Alumnos</h2>
+    <section class="section-card">
+      <h3>Listado de alumnos</h3>
+      <p>En esta pantalla puedes buscar por nombre, RUT o curso.</p>
+      <img class="shot" src="guide-images/03-students-list.png" alt="Listado de alumnos" />
+      <ol>
+        <li>Entra a <strong>Alumnos</strong>.</li>
+        <li>Busca por nombre, RUT o codigo.</li>
+        <li>Haz clic sobre el alumno para abrir su ficha.</li>
+      </ol>
+    </section>
+
+    <section class="section-card">
+      <h3>Ficha del alumno</h3>
+      <p>Aqui puedes ver los datos principales del estudiante.</p>
+      <img class="shot" src="guide-images/04-student-detail.png" alt="Ficha del alumno" />
+      <ul>
+        <li>Nombre</li>
+        <li>RUT</li>
+        <li>Curso</li>
+        <li>Edad</li>
+        <li>Fecha de nacimiento</li>
+        <li>Apoderado</li>
+        <li>Telefono</li>
+      </ul>
+      <p>Si eres administrador, tambien puedes editar la ficha.</p>
+    </section>
+
+    <h2>5. Accidentes</h2>
+    <section class="section-card">
+      <h3>Historial de accidentes</h3>
+      <p>Esta pantalla te muestra todos los registros guardados.</p>
+      <img class="shot" src="guide-images/05-accidents-history.png" alt="Historial de accidentes" />
+      <ol>
+        <li>Entra a <strong>Accidentes</strong>.</li>
+        <li>Revisa los registros guardados.</li>
+        <li>Usa los filtros si quieres buscar algo especifico.</li>
+        <li>Haz clic en un numero de registro para abrir el detalle.</li>
+      </ol>
+    </section>
+
+    <section class="section-card">
+      <h3>Nuevo accidente</h3>
+      <p>Esta es la pantalla para registrar un accidente nuevo.</p>
+      <img class="shot" src="guide-images/06-accident-new.png" alt="Formulario de accidente" />
+      <ol>
+        <li>Escribe el RUT del alumno.</li>
+        <li>La app completara automaticamente sus datos si ya esta en la base.</li>
+        <li>Completa fecha, hora, lugar y lesion.</li>
+        <li>Escribe la descripcion del accidente.</li>
+        <li>Presiona <strong>Guardar accidente</strong>.</li>
+      </ol>
+    </section>
+
+    <section class="section-card">
+      <h3>Detalle del accidente</h3>
+      <p>En esta ficha puedes revisar toda la informacion del registro.</p>
+      <img class="shot" src="guide-images/07-accident-detail.png" alt="Detalle del accidente" />
+      <ul>
+        <li>Datos del alumno</li>
+        <li>Fecha y hora</li>
+        <li>Lugar</li>
+        <li>Tipo de lesion</li>
+        <li>Descripcion</li>
+        <li>Observaciones</li>
+      </ul>
+      <p>Si eres administrador, desde aqui tambien puedes editar el accidente, guardar cambios, abrir el PDF o eliminarlo.</p>
+    </section>
+
+    <h2>6. Ajustes</h2>
+    <section class="section-card">
+      <h3>Lugares, tipos de lesion e importaciones</h3>
+      <p>Esta parte es solo para el administrador.</p>
+      <img class="shot" src="guide-images/08-settings-catalogs.png" alt="Ajustes y catalogos" />
+      <ul>
+        <li>Agregar nuevos lugares</li>
+        <li>Agregar nuevos tipos de lesion</li>
+        <li>Editar o borrar lugares</li>
+        <li>Editar o borrar tipos de lesion</li>
+        <li>Importar alumnos o accidentes desde archivo</li>
+      </ul>
+    </section>
+
+    <section class="section-card">
+      <h3>Usuarios</h3>
+      <p>El administrador puede manejar quienes entran a la app.</p>
+      <img class="shot" src="guide-images/09-settings-users.png" alt="Usuarios" />
+      <ul>
+        <li>Crear usuarios</li>
+        <li>Editar nombre, correo o rol</li>
+        <li>Eliminar usuarios</li>
+      </ul>
+    </section>
+
+    <h2>7. Consejos simples</h2>
+    <section class="tip">
+      <ul>
+        <li>Revisa los datos antes de guardar.</li>
+        <li>Usa el RUT para encontrar alumnos mas rapido.</li>
+        <li>Si un cambio no aparece, presiona <strong>Ctrl + F5</strong>.</li>
+        <li>Si eres administrador, revisa bien antes de borrar informacion.</li>
+      </ul>
+    </section>
+
+    <h2>8. Resumen final</h2>
+    <p>Esta app permite registrar accidentes escolares, revisar alumnos, consultar historiales y ver estadisticas de forma ordenada y facil de entender.</p>
+    <p class="small">Administrador: control total. Operador: consulta segura sin modificar informacion.</p>
+  </main>
+</body>
+</html>
