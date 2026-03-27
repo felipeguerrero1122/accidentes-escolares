@@ -33,3 +33,17 @@ Ambos endpoints aceptan `multipart/form-data` con un archivo `file` en formato `
 
 - El proyecto esta optimizado para uso de escritorio.
 - La ficha PDF se genera desde `/api/accidents/:id/pdf`.
+
+## Deploy en Cloudflare
+
+- Este proyecto usa OpenNext para desplegar en Cloudflare Workers.
+- No uses `npm run build` como `Build command` en Cloudflare, porque solo ejecuta `next build`.
+- Configuracion recomendada en Cloudflare:
+  - `Build command`: `npx opennextjs-cloudflare build`
+  - `Deploy command`: `npx wrangler deploy`
+- Scripts equivalentes en la repo:
+  - `npm run build:cloudflare`
+  - `npm run deploy:cloudflare`
+- Si quieres validar el flujo completo localmente:
+  - `npm run preview`
+  - `npm run deploy`
