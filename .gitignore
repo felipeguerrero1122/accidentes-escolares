@@ -8,3 +8,8 @@ next-start.out.log
 next-start.err.log
 guide-images/
 pg-local/
+node-runtime/
+tools/node-v24.14.0-win-x64/
+tools/node-v24.14.0-win-x64.zip
+tools/cloudflared.exe
+*.zip
