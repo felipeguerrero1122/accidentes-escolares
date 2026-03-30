@@ -1,13 +1,15 @@
 import { neon } from "@neondatabase/serverless";
 import { PrismaClient } from "@prisma/client";
 
-const databaseUrl = process.env.DATABASE_URL;
+export function getSql() {
+  const databaseUrl = process.env.DATABASE_URL;
 
-if (!databaseUrl) {
-  throw new Error("DATABASE_URL is not configured");
+  if (!databaseUrl) {
+    throw new Error("DATABASE_URL is not configured");
+  }
+
+  return neon(databaseUrl);
 }
-
-export const sql = neon(databaseUrl);
 
 declare global {
   // eslint-disable-next-line no-var

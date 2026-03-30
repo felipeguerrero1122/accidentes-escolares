@@ -4,7 +4,7 @@ import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { SESSION_COOKIE } from "@/lib/constants";
-import { sql } from "@/lib/db";
+import { getSql } from "@/lib/db";
 
 type SessionPayload = {
   sub: string;
@@ -87,6 +87,7 @@ export async function requireAdmin() {
 }
 
 export async function loginWithCredentials(email: string, password: string) {
+  const sql = getSql();
   const users = (await sql`
     SELECT id, name, email, "passwordHash", role, active
     FROM "User"

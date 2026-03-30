@@ -1,4 +1,4 @@
-import { prisma, sql } from "@/lib/db";
+import { getSql, prisma } from "@/lib/db";
 import { calculateAgeAtDate, coerceDate, normalizeRut, splitFullName } from "@/lib/utils";
 
 const WEEKDAY_ORDER = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"] as const;
@@ -102,6 +102,7 @@ function getWeekdayLabel(value: Date) {
 }
 
 export async function getDashboardSummary() {
+  const sql = getSql();
   const [totalRows, withReferralRows, withoutGuardianNoticeRows, missingDescriptionRows, lastAccidentRows] = await Promise.all([
     sql`SELECT COUNT(*)::int AS count FROM "Accident"`,
     sql`SELECT COUNT(*)::int AS count FROM "Accident" WHERE referred = true`,

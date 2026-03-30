@@ -2,7 +2,7 @@ import Link from "next/link";
 import { PageHeader } from "@/components/page-header";
 import { TableCard } from "@/components/table-card";
 import { requireSession } from "@/lib/auth";
-import { sql } from "@/lib/db";
+import { getSql } from "@/lib/db";
 
 const GRADE_ORDER = [
   "pre kinder",
@@ -59,6 +59,7 @@ export default async function StudentsPage({
 }: {
   searchParams: Promise<{ q?: string; grade?: string }>;
 }) {
+  const sql = getSql();
   const session = await requireSession();
   const { q, grade } = await searchParams;
   const query = q?.trim().toLowerCase() ?? "";
