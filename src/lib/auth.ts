@@ -4,13 +4,22 @@ import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { SESSION_COOKIE } from "@/lib/constants";
-import { prisma } from "@/lib/db";
+import { sql } from "@/lib/db";
 
 type SessionPayload = {
   sub: string;
   role: UserRole;
   email: string;
   name: string;
+};
+
+type UserRow = {
+  id: string;
+  name: string;
+  email: string;
+  passwordHash: string;
+  role: UserRole;
+  active: boolean;
 };
 
 function getSecret() {
@@ -78,7 +87,13 @@ export async function requireAdmin() {
 }
 
 export async function loginWithCredentials(email: string, password: string) {
-  const user = await prisma.user.findUnique({ where: { email } });
+  const users = (await sql`
+    SELECT id, name, email, "passwordHash", role, active
+    FROM "User"
+    WHERE email = ${email}
+    LIMIT 1
+  `) as UserRow[];
+  const user = users[0] ?? null;
   if (!user || !user.active) return null;
 
   const valid = await verifyPassword(password, user.passwordHash);

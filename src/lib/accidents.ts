@@ -1,7 +1,21 @@
-import { prisma } from "@/lib/db";
+import { prisma, sql } from "@/lib/db";
 import { calculateAgeAtDate, coerceDate, normalizeRut, splitFullName } from "@/lib/utils";
 
-const WEEKDAY_ORDER = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"] as const;
+const WEEKDAY_ORDER = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"] as const;
+
+type DashboardCountRow = {
+  count: number;
+};
+
+type LastAccidentRow = {
+  recordNumber: number;
+};
+
+type DashboardAccidentRow = {
+  accidentDate: string | Date;
+  studentGradeLevel: string;
+  injuryType: string | null;
+};
 
 export async function getNextRecordNumber() {
   const last = await prisma.accident.findFirst({
@@ -20,7 +34,7 @@ export async function buildAccidentSnapshot(studentId: string, accidentDateInput
 
   const accidentDate = coerceDate(accidentDateInput);
   if (!accidentDate) {
-    throw new Error("Fecha de accidente inválida.");
+    throw new Error("Fecha de accidente invalida.");
   }
 
   const splitName = splitFullName(student.fullName);
@@ -77,7 +91,7 @@ function getWeekdayLabel(value: Date) {
     case 2:
       return "Martes";
     case 3:
-      return "Miércoles";
+      return "Miercoles";
     case 4:
       return "Jueves";
     case 5:
@@ -88,24 +102,29 @@ function getWeekdayLabel(value: Date) {
 }
 
 export async function getDashboardSummary() {
-  const [total, withReferral, withoutGuardianNotice, missingDescription, lastAccident] = await Promise.all([
-    prisma.accident.count(),
-    prisma.accident.count({ where: { referred: true } }),
-    prisma.accident.count({ where: { guardianInformed: false } }),
-    prisma.accident.count({ where: { description: "" } }),
-    prisma.accident.findFirst({
-      orderBy: { recordNumber: "desc" },
-      select: { recordNumber: true }
-    })
+  const [totalRows, withReferralRows, withoutGuardianNoticeRows, missingDescriptionRows, lastAccidentRows] = await Promise.all([
+    sql`SELECT COUNT(*)::int AS count FROM "Accident"`,
+    sql`SELECT COUNT(*)::int AS count FROM "Accident" WHERE referred = true`,
+    sql`SELECT COUNT(*)::int AS count FROM "Accident" WHERE "guardianInformed" = false`,
+    sql`SELECT COUNT(*)::int AS count FROM "Accident" WHERE description = ''`,
+    sql`
+      SELECT "recordNumber"
+      FROM "Accident"
+      ORDER BY "recordNumber" DESC
+      LIMIT 1
+    `
   ]);
 
-  const accidents = await prisma.accident.findMany({
-    select: {
-      accidentDate: true,
-      studentGradeLevel: true,
-      injuryType: true
-    }
-  });
+  const total = (totalRows as DashboardCountRow[])[0]?.count ?? 0;
+  const withReferral = (withReferralRows as DashboardCountRow[])[0]?.count ?? 0;
+  const withoutGuardianNotice = (withoutGuardianNoticeRows as DashboardCountRow[])[0]?.count ?? 0;
+  const missingDescription = (missingDescriptionRows as DashboardCountRow[])[0]?.count ?? 0;
+  const lastAccident = (lastAccidentRows as LastAccidentRow[])[0] ?? null;
+
+  const accidents = (await sql`
+    SELECT "accidentDate", "studentGradeLevel", "injuryType"
+    FROM "Accident"
+  `) as DashboardAccidentRow[];
 
   const byGradeMap = new Map<string, number>();
   const byInjuryMap = new Map<string, number>();
@@ -113,15 +132,17 @@ export async function getDashboardSummary() {
   const byWeekdayMap = new Map<string, number>(WEEKDAY_ORDER.map((day) => [day, 0]));
 
   for (const accident of accidents) {
+    const accidentDate = new Date(accident.accidentDate);
+
     byGradeMap.set(accident.studentGradeLevel, (byGradeMap.get(accident.studentGradeLevel) ?? 0) + 1);
     if (accident.injuryType) {
       byInjuryMap.set(accident.injuryType, (byInjuryMap.get(accident.injuryType) ?? 0) + 1);
     }
 
-    const dayKey = formatDayKey(accident.accidentDate);
+    const dayKey = formatDayKey(accidentDate);
     byDayMap.set(dayKey, (byDayMap.get(dayKey) ?? 0) + 1);
 
-    const weekdayLabel = getWeekdayLabel(accident.accidentDate);
+    const weekdayLabel = getWeekdayLabel(accidentDate);
     if (weekdayLabel) {
       byWeekdayMap.set(weekdayLabel, (byWeekdayMap.get(weekdayLabel) ?? 0) + 1);
     }

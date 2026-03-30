@@ -2,7 +2,7 @@ import Link from "next/link";
 import { PageHeader } from "@/components/page-header";
 import { TableCard } from "@/components/table-card";
 import { requireSession } from "@/lib/auth";
-import { prisma } from "@/lib/db";
+import { sql } from "@/lib/db";
 
 const GRADE_ORDER = [
   "pre kinder",
@@ -16,6 +16,15 @@ const GRADE_ORDER = [
   "septimo",
   "octavo"
 ];
+
+type StudentRow = {
+  id: string;
+  studentCode: string;
+  fullName: string;
+  rut: string;
+  gradeLevel: string;
+  guardianName: string | null;
+};
 
 function normalizeGradeLevel(value: string) {
   return value
@@ -52,21 +61,33 @@ export default async function StudentsPage({
 }) {
   const session = await requireSession();
   const { q, grade } = await searchParams;
-  const students = await prisma.student.findMany({
-    where: {
-      gradeLevel: grade || undefined,
-      OR: q
-        ? [
-            { fullName: { contains: q, mode: "insensitive" } },
-            { rut: { contains: q, mode: "insensitive" } },
-            { studentCode: { contains: q, mode: "insensitive" } }
-          ]
-        : undefined
-    },
-    orderBy: [{ fullName: "asc" }]
+  const query = q?.trim().toLowerCase() ?? "";
+  const gradeFilter = grade?.trim() ?? "";
+
+  const students = (await sql`
+    SELECT
+      id,
+      "studentCode",
+      "fullName",
+      rut,
+      "gradeLevel",
+      "guardianName"
+    FROM "Student"
+    ORDER BY "fullName" ASC
+  `) as StudentRow[];
+
+  const filteredStudents = students.filter((student) => {
+    const matchesGrade = !gradeFilter || student.gradeLevel === gradeFilter;
+    const matchesQuery =
+      !query ||
+      student.fullName.toLowerCase().includes(query) ||
+      student.rut.toLowerCase().includes(query) ||
+      student.studentCode.toLowerCase().includes(query);
+
+    return matchesGrade && matchesQuery;
   });
 
-  const sortedStudents = [...students].sort((a, b) => {
+  const sortedStudents = [...filteredStudents].sort((a, b) => {
     const gradeRankDiff = getGradeRank(a.gradeLevel) - getGradeRank(b.gradeLevel);
     if (gradeRankDiff !== 0) return gradeRankDiff;
 
